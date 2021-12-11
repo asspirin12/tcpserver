@@ -13,10 +13,7 @@ func must(err error) {
 }
 
 func handle(conn net.Conn) {
-	defer func(conn net.Conn) {
-		err := conn.Close()
-		must(err)
-	}(conn)
+	defer conn.Close()
 
 	scanner := bufio.NewScanner(conn)
 
@@ -30,10 +27,7 @@ func main() {
 	listener, err := net.Listen("tcp", "localhost:3333")
 	must(err)
 
-	defer func(l net.Listener) {
-		err := l.Close()
-		must(err)
-	}(listener)
+	defer listener.Close()
 
 	for {
 		conn, err := listener.Accept()

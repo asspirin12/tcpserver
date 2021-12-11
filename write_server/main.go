@@ -21,9 +21,9 @@ func main() {
         conn, err := listener.Accept()
         must(err)
 
+        defer conn.Close()
+
         _, err = conn.Write([]byte("Hello world"))
         must(err)
-
-        conn.Close()
     }
 }
