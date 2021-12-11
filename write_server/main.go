@@ -12,7 +12,7 @@ func must(err error) {
 }
 
 func main() {
-    listener, err := net.Listen("tcp", "localhost:8080")
+    listener, err := net.Listen("tcp", "localhost:3333")
     must(err)
 
     defer listener.Close()
