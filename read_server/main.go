@@ -1,7 +1,8 @@
 package main
 
 import (
-	"bufio"
+	"io"
+	"os"
 	"fmt"
 	"net"
 )
@@ -13,14 +14,8 @@ func must(err error) {
 }
 
 func handle(conn net.Conn) {
-	defer conn.Close()
-
-	scanner := bufio.NewScanner(conn)
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		fmt.Println(line)
-	}
+	_, err := io.Copy(os.Stdout, conn)
+	must(err)
 }
 
 func main() {
@@ -32,6 +27,8 @@ func main() {
 	for {
 		conn, err := listener.Accept()
 		must(err)
+
+		defer conn.Close()
 
 		handle(conn)
 	}
