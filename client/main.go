@@ -20,7 +20,9 @@ func writeRead(conn net.Conn) {
 
 		fmt.Fprint(conn, messageToServer)
 
-		replyFromServer, _ := bufio.NewReader(conn).ReadString('\n')
+		replyFromServer, err := bufio.NewReader(conn).ReadString('\n')
+		must(err)
+		
 		fmt.Println(replyFromServer)
 	}
 }
